@@ -23,7 +23,7 @@ function covid19ImpactEstimator($data)
 	);
 
 	// this is the variable to store the array to output severeImpact..
-	$severeimpact = array(
+	$severeImpact = array(
 		'CurrentlyInfected' => $severeImpactcurrentlyInfected,
 		'InfectionsByRequestedTime' => $severeImpactInfectionsByRequestedTime,
 	);
@@ -34,7 +34,7 @@ function covid19ImpactEstimator($data)
 	$data = array(
 		'data' => $data,
 		'impact' => $impact,
-		'severeimpact' => $severeimpact 
+		'severeImpact' => $severeImpact 
 	);
 
   	return $data;
