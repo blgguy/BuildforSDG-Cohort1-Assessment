@@ -6,26 +6,38 @@ function covid19ImpactEstimator($data)
 {
 	$periodtype 	= $data['periodType'];
 	$timetoelapse 	= $data['timeToElapse'];
-	$reportedCases 	= $data["reportedCases"];
+	$reportedCases 	= $data['reportedCases'];
+	$totalHospitalBeds = $data['totalHospitalBeds'];
 
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
+    $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100);
+    $impacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($impactsevereCaseByRequestedTime);
+    $impacthospitalBedsByRequestedTime = floor($impacthospitalBedsByRequestedTime);
 
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
+    $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100);
+	$servereimpacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($servereimpactsevereCaseByRequestedTime);
+	$servereimpacthospitalBedsByRequestedTime = floor($servereimpacthospitalBedsByRequestedTime);
+
 
     // this is the variable to store the array to output Impact..
 	$impact = array(
 		'currentlyInfected' => $currentlyInfected,
 		'infectionsByRequestedTime' => $impactInfectionsByRequestedTime,
+		'severeCaseByRequestedTime' => $impactsevereCaseByRequestedTime,
+		'hospitalBedsByRequestedTime' => $impacthospitalBedsByRequestedTime,
 	);
 
 	// this is the variable to store the array to output severeImpact..
 	$severeImpact = array(
 		'currentlyInfected' => $severeImpactcurrentlyInfected,
 		'infectionsByRequestedTime' => $severeImpactInfectionsByRequestedTime,
+		'severeCaseByRequestedTime' => $servereimpactsevereCaseByRequestedTime,
+		'hospitalBedsByRequestedTime' => $servereimpacthospitalBedsByRequestedTime,
 	);
 
 
@@ -40,6 +52,7 @@ function covid19ImpactEstimator($data)
   	return $data;
 }
 
+
 function periodT0Days($periodtype, $timeToElapse){
 	$day = 0;
 	if ($periodtype == 'months') {
@@ -53,6 +66,7 @@ function periodT0Days($periodtype, $timeToElapse){
 	}
 return $days;
 }
+
 function infectionbyrequestedtime($currentlyinfected, $periodtype, $timeToElapse){
 	$factor = periodT0Days($periodtype, $timeToElapse);
 	$factor = floor($factor / 3);
