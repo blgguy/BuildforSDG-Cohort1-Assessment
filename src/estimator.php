@@ -15,20 +15,20 @@ function covid19ImpactEstimator($data)
     $severeImpactcurrentlyInfected = $reportedCases * 50;
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyinfected, $periodtype, $timetoelapse);
 
-    // this is the variable to store the array to output Impact
+    // this is the variable to store the array to output Impact..
 	$impact = array(
 		'CurrentlyInfected' => $impactCurrentlyInfected,
 		'InfectionsByRequestedTime' => $impactInfectionsByRequestedTime,
 	);
 
-	// this is the variable to store the array to output severeImpact
+	// this is the variable to store the array to output severeImpact..
 	$severeimpact = array(
 		'CurrentlyInfected' => $severeImpactcurrentlyInfected,
 		'InfectionsByRequestedTime' => $severeImpactInfectionsByRequestedTime,
 	);
 
 
-	//this will return all the arrays.
+	//this will return all the arrays...
 	$data = array(
 		'data' => $data,
 		'impact' => $impact,
