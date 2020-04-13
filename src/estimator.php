@@ -1,5 +1,6 @@
 <?php
-header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
   
 function covid19ImpactEstimator($data)
 {
@@ -8,16 +9,16 @@ function covid19ImpactEstimator($data)
 	$reportedCases 	= $data["reportedCases"];
 
     //impact...
-    $impactCurrentlyInfected = $reportedCases * 10;
-    $impactInfectionsByRequestedTime = infectionbyrequestedtime($impactcurrentlyInfected, $periodtype, $timetoelapse);
+    $currentlyInfected = floor($reportedCases * 10);
+    $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
 
     //severeimpact...
-    $severeImpactcurrentlyInfected = $reportedCases * 50;
-    $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyinfected, $periodtype, $timetoelapse);
+    $severeImpactcurrentlyInfected = floor($reportedCases * 50);
+    $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
 
     // this is the variable to store the array to output Impact..
 	$impact = array(
-		'CurrentlyInfected' => $impactCurrentlyInfected,
+		'CurrentlyInfected' => $currentlyInfected,
 		'InfectionsByRequestedTime' => $impactInfectionsByRequestedTime,
 	);
 
@@ -28,18 +29,19 @@ function covid19ImpactEstimator($data)
 	);
 
 
-	//this will return all the arrays...
+	//this will return all the Datas...
+	
 	$data = array(
 		'data' => $data,
 		'impact' => $impact,
 		'severeimpact' => $severeimpact 
 	);
 
-
   	return $data;
 }
 
 function periodT0Days($periodtype, $timeToElapse){
+	$day = 0;
 	if ($periodtype == 'months') {
 		$days = 30 * $timeToElapse;
 	}elseif ($periodtype == 'weeks') {
@@ -47,12 +49,12 @@ function periodT0Days($periodtype, $timeToElapse){
 	}elseif ($periodtype == 'days') {
 		$days = $timeToElapse;
 	} else{
-		echo "use a valid periodtype";
+		return "use a valid periodtype";
 	}
-echo $days;
+return $days;
 }
 function infectionbyrequestedtime($currentlyinfected, $periodtype, $timeToElapse){
 	$factor = periodT0Days($periodtype, $timeToElapse);
 	$factor = floor($factor / 3);
-	echo $currentlyinfected * (2**$factor);
+	return $currentlyinfected * (2**$factor);
 }
