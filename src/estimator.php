@@ -1,7 +1,20 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-  
+   $data = array(
+         		"region" => array(
+					        "name"	        					=>	"Africa",
+					        "avgAge" 	    					=>	19.7,
+					        "avgDailyIncomeInUSD"				=>	4,
+					        "avgDailyIncomeInPopulation" 		=>	0.73,
+					    ),
+	         	"periodType" 			=>	"days",
+		        "timeToElapse"        	=>  38,
+		        "reportedCases"         =>  2747,
+		        "population"          	=>  92931687,
+		        "totalHospitalBeds"     =>  678874,
+	    		);
+
 function covid19ImpactEstimator($data)
 {
 	$periodtype 	= $data['periodType'];
@@ -14,14 +27,12 @@ function covid19ImpactEstimator($data)
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
     $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100);
     $impacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($impactsevereCaseByRequestedTime);
-    $impacthospitalBedsByRequestedTime = floor($impacthospitalBedsByRequestedTime);
 
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
     $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100);
 	$servereimpacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($servereimpactsevereCaseByRequestedTime);
-	$servereimpacthospitalBedsByRequestedTime = floor($servereimpacthospitalBedsByRequestedTime);
 
 
     // this is the variable to store the array to output Impact..
@@ -51,7 +62,6 @@ function covid19ImpactEstimator($data)
 
   	return $data;
 }
-
 
 function periodT0Days($periodtype, $timeToElapse){
 	$day = 0;
