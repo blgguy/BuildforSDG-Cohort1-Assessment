@@ -28,7 +28,7 @@ function covid19ImpactEstimator($data)
 	$impact = array(
 		'currentlyInfected' => $currentlyInfected,
 		'infectionsByRequestedTime' => $impactInfectionsByRequestedTime,
-		'severeCaseByRequestedTime' => $impactsevereCaseByRequestedTime,
+		'severeCasesByRequestedTime' => $impactsevereCaseByRequestedTime,
 		'hospitalBedsByRequestedTime' => $impacthospitalBedsByRequestedTime,
 	);
 
@@ -36,7 +36,7 @@ function covid19ImpactEstimator($data)
 	$severeImpact = array(
 		'currentlyInfected' => $severeImpactcurrentlyInfected,
 		'infectionsByRequestedTime' => $severeImpactInfectionsByRequestedTime,
-		'severeCaseByRequestedTime' => $servereimpactsevereCaseByRequestedTime,
+		'severeCasesByRequestedTime' => $servereimpactsevereCaseByRequestedTime,
 		'hospitalBedsByRequestedTime' => $servereimpacthospitalBedsByRequestedTime,
 	);
 
