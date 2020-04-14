@@ -1,19 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-   $data = array(
-         		"region" => array(
-					        "name"	        					=>	"Africa",
-					        "avgAge" 	    					=>	19.7,
-					        "avgDailyIncomeInUSD"				=>	4,
-					        "avgDailyIncomeInPopulation" 		=>	0.73,
-					    ),
-	         	"periodType" 			=>	"days",
-		        "timeToElapse"        	=>  38,
-		        "reportedCases"         =>  2747,
-		        "population"          	=>  92931687,
-		        "totalHospitalBeds"     =>  678874,
-	    		);
 
 function covid19ImpactEstimator($data)
 {
@@ -25,9 +12,10 @@ function covid19ImpactEstimator($data)
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
-    $impactsevereCaseByRequestedTime = floor((15*$impactInfectionsByRequestedTime) / 100);
-    $impacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($impactsevereCaseByRequestedTime);
-    $impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
+    $impactsevereCaseByRequestedTime = (15*$impactInfectionsByRequestedTime) / 100;
+    $beds = (35*$totalHospitalBeds) / 100;
+    $impacthospitalBedsByRequestedTime = bcdiv($beds - $impactsevereCaseByRequestedTime);
+    //$impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
 
     //$impactcasesForVentilatorsByRequestedTime =;
     //$impactdollarsInFlight = ;
@@ -35,9 +23,10 @@ function covid19ImpactEstimator($data)
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
-    $servereimpactsevereCaseByRequestedTime = floor((15*$severeImpactInfectionsByRequestedTime) / 100);
-	$servereimpacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($servereimpactsevereCaseByRequestedTime);
-	$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime);
+    $servereimpactsevereCaseByRequestedTime = (15*$severeImpactInfectionsByRequestedTime) / 100;
+    $severebeds = (35*$totalHospitalBeds) / 100;
+	$servereimpacthospitalBedsByRequestedTime = bcdiv($severebeds - $servereimpactsevereCaseByRequestedTime);
+	//$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime);
 	//$severeimpactcasesForVentilatorsByRequestedTime =;
     //$severeimpactdollarsInFlight = ;
 
