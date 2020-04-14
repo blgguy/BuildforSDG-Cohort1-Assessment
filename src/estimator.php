@@ -14,7 +14,7 @@ function covid19ImpactEstimator($data)
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
     $impactsevereCaseByRequestedTime = (15*$impactInfectionsByRequestedTime) / 100;
     $beds = (35*$totalHospitalBeds) / 100;
-    $impacthospitalBedsByRequestedTime = bcdiv($beds - $impactsevereCaseByRequestedTime);
+    $impacthospitalBedsByRequestedTime = bcdiv($beds - $impactsevereCaseByRequestedTime, 1, 0);
     //$impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
 
     //$impactcasesForVentilatorsByRequestedTime =;
@@ -25,7 +25,7 @@ function covid19ImpactEstimator($data)
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
     $servereimpactsevereCaseByRequestedTime = (15*$severeImpactInfectionsByRequestedTime) / 100;
     $severebeds = (35*$totalHospitalBeds) / 100;
-	$servereimpacthospitalBedsByRequestedTime = bcdiv($severebeds - $servereimpactsevereCaseByRequestedTime);
+	$servereimpacthospitalBedsByRequestedTime = bcdiv($severebeds - $servereimpactsevereCaseByRequestedTime, 1, 0);
 	//$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime);
 	//$severeimpactcasesForVentilatorsByRequestedTime =;
     //$severeimpactdollarsInFlight = ;
