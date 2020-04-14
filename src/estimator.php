@@ -8,8 +8,8 @@ function covid19ImpactEstimator($data)
 	$timetoelapse 			= (int)$data['timeToElapse'];
 	$reportedCases 			= (int)$data['reportedCases'];
 	$totalHospitalBeds 		= (int)$data['totalHospitalBeds'];
-	$avgDailyIncomeInUSD 	= (int)['avgDailyIncomeInUSD']
-	$avgDailyIncomeInPopulation = (int)['avgDailyIncomeInPopulation'];
+	$avgDailyIncomeInUSD 	= (int)$data['region']['avgDailyIncomeInUSD'];
+	$avgDailyIncomeInPopulation = (int)$data['region']['avgDailyIncomeInPopulation'];
 
     //impact...
     $currentlyInfected 				= floor($reportedCases * 10);
