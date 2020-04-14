@@ -25,16 +25,21 @@ function covid19ImpactEstimator($data)
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
-    $impactsevereCaseByRequestedTime = bcdiv(15*$impactInfectionsByRequestedTime/100, 1, 0);
-    $impacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) - ($impactsevereCaseByRequestedTime);
-    $impacthospitalBedsByRequestedTime = bcdiv($impacthospitalBedsByRequestedTime, 1, 0,);
+    $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100, 1, 0);
+    $impacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($impactsevereCaseByRequestedTime);
+    $impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime, 1, 0,);
+
+    //$impactcasesForVentilatorsByRequestedTime =;
+    //$impactdollarsInFlight = ;
 
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
-    $servereimpactsevereCaseByRequestedTime = bcdiv(15*$severeImpactInfectionsByRequestedTime/100, 1, 0);
-	$servereimpacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) - ($servereimpactsevereCaseByRequestedTime);
-	$servereimpacthospitalBedsByRequestedTime = bcdiv($servereimpacthospitalBedsByRequestedTime, 1, 0);
+    $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100, 1, 0);
+	$servereimpacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($servereimpactsevereCaseByRequestedTime);
+	$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime, 1, 0);
+	//$severeimpactcasesForVentilatorsByRequestedTime =;
+    //$severeimpactdollarsInFlight = ;
 
 
     // this is the variable to store the array to output Impact..
@@ -43,6 +48,8 @@ function covid19ImpactEstimator($data)
 		'infectionsByRequestedTime' => $impactInfectionsByRequestedTime,
 		'severeCasesByRequestedTime' => $impactsevereCaseByRequestedTime,
 		'hospitalBedsByRequestedTime' => $impacthospitalBedsByRequestedTime,
+		//'casesForVentilatorsByRequestedTime' => $impactcasesForVentilatorsByRequestedTime,
+		//'dollarsInFlight' => $impactdollarsInFlight
 	);
 
 	// this is the variable to store the array to output severeImpact..
@@ -51,6 +58,8 @@ function covid19ImpactEstimator($data)
 		'infectionsByRequestedTime' => $severeImpactInfectionsByRequestedTime,
 		'severeCasesByRequestedTime' => $servereimpactsevereCaseByRequestedTime,
 		'hospitalBedsByRequestedTime' => $servereimpacthospitalBedsByRequestedTime,
+		//'casesForVentilatorsByRequestedTime' => $severeimpactcasesForVentilatorsByRequestedTime,
+		//'dollarsInFlight' => $severeimpactdollarsInFlight
 	);
 
 
