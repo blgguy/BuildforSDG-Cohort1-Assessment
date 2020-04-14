@@ -25,14 +25,16 @@ function covid19ImpactEstimator($data)
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
-    $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100);
-    $impacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) -($impactsevereCaseByRequestedTime);
+    $impactsevereCaseByRequestedTime = floor(5*$impactInfectionsByRequestedTime/100);
+    $impacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) - ($impactsevereCaseByRequestedTime);
+    $impacthospitalBedsByRequestedTime = floor($impacthospitalBedsByRequestedTime);
 
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
-    $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100);
-	$servereimpacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) -($servereimpactsevereCaseByRequestedTime);
+    $servereimpactsevereCaseByRequestedTime = floor(5*$severeImpactInfectionsByRequestedTime/100);
+	$servereimpacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) - ($servereimpactsevereCaseByRequestedTime);
+	$servereimpacthospitalBedsByRequestedTime = floor($servereimpacthospitalBedsByRequestedTime);
 
 
     // this is the variable to store the array to output Impact..
