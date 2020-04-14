@@ -18,7 +18,7 @@ function covid19ImpactEstimator($data)
     $beds = (35*$totalHospitalBeds) / 100;
     $impacthospitalBedsByRequestedTime = bcdiv($beds - $impactsevereCaseByRequestedTime, 1, 0);
     //$impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
-    $impactcasesForVentilatorsByRequestedTime = floor((5 * $infectionsByRequestedTime) / 100);
+    $impactcasesForVentilatorsByRequestedTime = floor((5 * $impactInfectionsByRequestedTime) / 100);
     $impactdollarsInFlight = dollarsInFlight($impactInfectionsByRequestedTime, $periodtype, $timetoelapse, $avgDailyIncomeInUSD, $avgDailyIncomeInPopulation);
 
     //severeimpact...
@@ -28,7 +28,7 @@ function covid19ImpactEstimator($data)
     $severebeds = (35*$totalHospitalBeds) / 100;
 	$servereimpacthospitalBedsByRequestedTime = bcdiv($severebeds - $servereimpactsevereCaseByRequestedTime, 1, 0);
 	//$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime);
-	$severeimpactcasesForVentilatorsByRequestedTime = floor((2 * $infectionsByRequestedTime) / 100);
+	$severeimpactcasesForVentilatorsByRequestedTime = floor((2 * $severeImpactInfectionsByRequestedTime) / 100);
     $severeimpactdollarsInFlight = dollarsInFlight($severeImpactInfectionsByRequestedTime, $periodtype, $timetoelapse, $avgDailyIncomeInUSD, $avgDailyIncomeInPopulation);
 
     // this is the variable to store the array to output Impact..
