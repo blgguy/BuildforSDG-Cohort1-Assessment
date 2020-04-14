@@ -5,11 +5,11 @@ header("Content-Type: application/json; charset=UTF-8");
 function covid19ImpactEstimator($data)
 {
 	$periodtype 			= $data['periodType'];
-	$timetoelapse 			= (int)$data['timeToElapse'];
-	$reportedCases 			= (int)$data['reportedCases'];
-	$totalHospitalBeds 		= (int)$data['totalHospitalBeds'];
-	$avgDailyIncomeInUSD 	= (int)$data['region']['avgDailyIncomeInUSD'];
-	$avgDailyIncomeInPopulation = (int)$data['region']['avgDailyIncomeInPopulation'];
+	$timetoelapse 			= $data['timeToElapse'];
+	$reportedCases 			= $data['reportedCases'];
+	$totalHospitalBeds 		= $data['totalHospitalBeds'];
+	$avgDailyIncomeInUSD 	= $data['region']['avgDailyIncomeInUSD'];
+	$avgDailyIncomeInPopulation = $data['region']['avgDailyIncomeInPopulation'];
 
     //impact...
     $currentlyInfected 				= floor($reportedCases * 10);
@@ -19,7 +19,7 @@ function covid19ImpactEstimator($data)
     $impacthospitalBedsByRequestedTime = bcdiv($beds - $impactsevereCaseByRequestedTime, 1, 0);
     //$impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
     $impactcasesForVentilatorsByRequestedTime = floor((5 * $infectionsByRequestedTime) / 100);
-    $impactdollarsInFlight = dollarsInFlight($impactInfectionsByRequestedTime, $periodtype, $timetoelapse, $avgDailyIncomeInUSD, $avgDailyIncomeInPopulation);;
+    $impactdollarsInFlight = dollarsInFlight($impactInfectionsByRequestedTime, $periodtype, $timetoelapse, $avgDailyIncomeInUSD, $avgDailyIncomeInPopulation);
 
     //severeimpact...
     $severeImpactcurrentlyInfected 			= floor($reportedCases * 50);
@@ -33,22 +33,22 @@ function covid19ImpactEstimator($data)
 
     // this is the variable to store the array to output Impact..
 	$impact = array(
-		'currentlyInfected' 			=> $currentlyInfected,
-		'infectionsByRequestedTime' 	=> $impactInfectionsByRequestedTime,
-		'severeCasesByRequestedTime' 	=> $impactsevereCaseByRequestedTime,
-		'hospitalBedsByRequestedTime' 	=> $impacthospitalBedsByRequestedTime,
-		'casesForVentilatorsByRequestedTime' => $impactcasesForVentilatorsByRequestedTime,
-		'dollarsInFlight' 				=> $impactdollarsInFlight
+		'currentlyInfected' 			=> (int)$currentlyInfected,
+		'infectionsByRequestedTime' 	=> (int)$impactInfectionsByRequestedTime,
+		'severeCasesByRequestedTime' 	=> (int)$impactsevereCaseByRequestedTime,
+		'hospitalBedsByRequestedTime' 	=> (int)$impacthospitalBedsByRequestedTime,
+		'casesForVentilatorsByRequestedTime' => (int)$impactcasesForVentilatorsByRequestedTime,
+		'dollarsInFlight' 				=> (int)$impactdollarsInFlight,
 	);
 
 	// this is the variable to store the array to output severeImpact..
 	$severeImpact = array(
-		'currentlyInfected' 			=> $severeImpactcurrentlyInfected,
-		'infectionsByRequestedTime' 	=> $severeImpactInfectionsByRequestedTime,
-		'severeCasesByRequestedTime' 	=> $servereimpactsevereCaseByRequestedTime,
-		'hospitalBedsByRequestedTime' 	=> $servereimpacthospitalBedsByRequestedTime,
-		'casesForVentilatorsByRequestedTime' => $severeimpactcasesForVentilatorsByRequestedTime,
-		'dollarsInFlight' 				=> $severeimpactdollarsInFlight
+		'currentlyInfected' 			=> (int)$severeImpactcurrentlyInfected,
+		'infectionsByRequestedTime' 	=> (int)$severeImpactInfectionsByRequestedTime,
+		'severeCasesByRequestedTime' 	=> (int)$servereimpactsevereCaseByRequestedTime,
+		'hospitalBedsByRequestedTime' 	=> (int)$servereimpacthospitalBedsByRequestedTime,
+		'casesForVentilatorsByRequestedTime' => (int)$severeimpactcasesForVentilatorsByRequestedTime,
+		'dollarsInFlight' 				=> (int)$severeimpactdollarsInFlight,
 	);
 
 	//this will return all the Datas...
@@ -82,10 +82,10 @@ function infectionbyrequestedtime($currentlyinfected, $periodtype, $timeToElapse
 	return $currentlyinfected * (2**$factor);
 }
 
-function dollarsInFlight($infectionsByRequestedTime,$periodType, $timeToElapse,
+function dollarsInFlight($infectionsByRequestedTime,$periodtype, $timetoelapse,
                          $avgDailyIncomeInUSD, $avgDailyIncomePopulation)
 {
-    $Totaldays = floor(periodT0Days($periodType, $timeToElapse));
+    $Totaldays = floor(periodT0Days($periodtype, $timetoelapse));
     $Avaragedollars =  ($infectionsByRequestedTime * $avgDailyIncomeInUSD * $avgDailyIncomePopulation) / $Totaldays;
     return floor($Avaragedollars);
 }
