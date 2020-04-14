@@ -25,9 +25,9 @@ function covid19ImpactEstimator($data)
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
-    $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100, 1, 0);
+    $impactsevereCaseByRequestedTime = floor((15*$impactInfectionsByRequestedTime) / 100);
     $impacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($impactsevereCaseByRequestedTime);
-    $impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime, 1, 0,);
+    $impacthospitalBedsByRequestedTime = round($impacthospitalBedsByRequestedTime);
 
     //$impactcasesForVentilatorsByRequestedTime =;
     //$impactdollarsInFlight = ;
@@ -35,9 +35,9 @@ function covid19ImpactEstimator($data)
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
-    $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100, 1, 0);
+    $servereimpactsevereCaseByRequestedTime = floor((15*$severeImpactInfectionsByRequestedTime) / 100);
 	$servereimpacthospitalBedsByRequestedTime = (35*$totalHospitalBeds /100) - ($servereimpactsevereCaseByRequestedTime);
-	$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime, 1, 0);
+	$servereimpacthospitalBedsByRequestedTime = round($servereimpacthospitalBedsByRequestedTime);
 	//$severeimpactcasesForVentilatorsByRequestedTime =;
     //$severeimpactdollarsInFlight = ;
 
