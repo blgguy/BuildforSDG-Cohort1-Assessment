@@ -17,22 +17,22 @@ header("Content-Type: application/json; charset=UTF-8");
 
 function covid19ImpactEstimator($data)
 {
-	$periodtype 	= $data['periodType'];
-	$timetoelapse 	= $data['timeToElapse'];
-	$reportedCases 	= $data['reportedCases'];
-	$totalHospitalBeds = $data['totalHospitalBeds'];
+	$periodtype 	= (int)$data['periodType'];
+	$timetoelapse 	= (int)$data['timeToElapse'];
+	$reportedCases 	= (int)$data['reportedCases'];
+	$totalHospitalBeds = (int)$data['totalHospitalBeds'];
 
     //impact...
     $currentlyInfected = floor($reportedCases * 10);
     $impactInfectionsByRequestedTime = infectionbyrequestedtime($currentlyInfected, $periodtype, $timetoelapse);
     $impactsevereCaseByRequestedTime = floor(15*$impactInfectionsByRequestedTime/100);
-    $impacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($impactsevereCaseByRequestedTime);
+    $impacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) -($impactsevereCaseByRequestedTime);
 
     //severeimpact...
     $severeImpactcurrentlyInfected = floor($reportedCases * 50);
     $severeImpactInfectionsByRequestedTime = infectionbyrequestedtime($severeImpactcurrentlyInfected, $periodtype, $timetoelapse);
     $servereimpactsevereCaseByRequestedTime = floor(15*$severeImpactInfectionsByRequestedTime/100);
-	$servereimpacthospitalBedsByRequestedTime = 35*$totalHospitalBeds /100 -($servereimpactsevereCaseByRequestedTime);
+	$servereimpacthospitalBedsByRequestedTime = (int)(35*$totalHospitalBeds /100) -($servereimpactsevereCaseByRequestedTime);
 
 
     // this is the variable to store the array to output Impact..
@@ -82,3 +82,10 @@ function infectionbyrequestedtime($currentlyinfected, $periodtype, $timeToElapse
 	$factor = floor($factor / 3);
 	return $currentlyinfected * (2**$factor);
 }
+
+$ab = 2345678901;
+$cd = -123432340097766778776.0067;
+$d = (int)($cd);
+echo "$d<br>";
+echo "$ab<br>$cd<br>";
+var_dump($cd);
