@@ -82,10 +82,3 @@ function infectionbyrequestedtime($currentlyinfected, $periodtype, $timeToElapse
 	$factor = floor($factor / 3);
 	return $currentlyinfected * (2**$factor);
 }
-
-$ab = 2345678901;
-$cd = -123432340097766778776.0067;
-$d = (int)($cd);
-echo "$d<br>";
-echo "$ab<br>$cd<br>";
-var_dump($cd);
