@@ -17,7 +17,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 function covid19ImpactEstimator($data)
 {
-	$periodtype 	= (int)$data['periodType'];
+	$periodtype 	= $data['periodType'];
 	$timetoelapse 	= (int)$data['timeToElapse'];
 	$reportedCases 	= (int)$data['reportedCases'];
 	$totalHospitalBeds = (int)$data['totalHospitalBeds'];
