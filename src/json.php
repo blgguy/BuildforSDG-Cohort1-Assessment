@@ -1,5 +1,11 @@
 <?php
 require('estimator.php');
 
-echo json_encode(covid19ImpactEstimator($data));
+function jsonFormat($data){
+            return json_encode(covid19ImpactEstimator($data));
+            log();
+    }
+
+	echo jsonFormat();
+
 ?>
